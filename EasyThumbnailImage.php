@@ -7,7 +7,6 @@
 
 namespace himiklab\thumbnail;
 
-use Imagine\Image\Box;
 use Imagine\Image\ManipulatorInterface;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -128,19 +127,17 @@ class EasyThumbnailImage
             mkdir($thumbnailFilePath, self::MKDIR_MODE, true);
         }
 
-        $box = new Box($width, $height);
         if ($fileNameIsUrl) {
             $image = Image::getImagine()->load($fileContent ?: self::fileFromUrlContent($filename));
         } else {
             $image = Image::getImagine()->open($filename);
         }
-        $image = $image->thumbnail($box, $mode);
 
         $options = [
             'quality' => $quality === null ? self::QUALITY : $quality
         ];
 
-        $image->save($thumbnailFile, $options);
+        $image = Image::thumbnail($image, $width, $height)->save($thumbnailFile, $options);
         return $thumbnailFile;
     }
 
