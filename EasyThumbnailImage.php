@@ -37,7 +37,6 @@ class EasyThumbnailImage
     /** @var int $cacheExpire */
     public static $cacheExpire = 0;
 
-    public static $grabberType = EasyThumbnail::GRABBER_PHP;
 
     /**
      * Creates and caches the image thumbnail and returns ImageInterface.
