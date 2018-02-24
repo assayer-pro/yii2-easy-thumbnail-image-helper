@@ -25,16 +25,10 @@ to the require section of your application's `composer.json` file.
 ```php
 'components' => [
     'thumbnail' => [
-        'class' => 'himiklab\thumbnail\EasyThumbnail',
+        'class' => 'himiklab\thumbnail\EasyThumbnailImage',
         'cacheAlias' => 'assets/gallery_thumbnails',
     ],
 ],
-```
-
-and in `bootstrap` section, for example:
-
-```php
-'bootstrap' => ['log', 'thumbnail'],
 ```
 
 It is necessary if you want to set global helper's settings for the application.
@@ -46,7 +40,7 @@ For example:
 ```php
 use himiklab\thumbnail\EasyThumbnailImage;
 
-echo EasyThumbnailImage::thumbnailImg(
+echo Yii::$app->thumbnail->thumbnailImg(
     $model->pictureFile,
     50,
     50,
@@ -60,7 +54,7 @@ or
 ```php
 use himiklab\thumbnail\EasyThumbnailImage;
 
-echo EasyThumbnailImage::thumbnailImg(
+echo Yii::$app->thumbnail->thumbnailImg(
     'http://...',
     50,
     50,
@@ -85,5 +79,5 @@ class ThumbHelper extends \himiklab\thumbnail\EasyThumbnailImage
             return \yii\helpers\Html::a($filename,"@web/files/$filename");
         }
     }
-} 
+}
 ```
