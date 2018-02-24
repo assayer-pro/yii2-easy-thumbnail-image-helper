@@ -32,10 +32,10 @@ class EasyThumbnailImage
     const CHECK_REM_MODE_HEADER = 3;
 
     /** @var string $cacheAlias path alias relative with @web where the cache files are kept */
-    public static $cacheAlias = 'assets/thumbnails';
+    public $cacheAlias = 'assets/thumbnails';
 
     /** @var int $cacheExpire */
-    public static $cacheExpire = 0;
+    public $cacheExpire = 0;
 
 
     /**
@@ -63,11 +63,11 @@ class EasyThumbnailImage
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
      */
-    public static function thumbnail($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $quality = null,
+    public function thumbnail($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $quality = null,
                                      $checkRemFileMode = self::CHECK_REM_MODE_NONE)
     {
         return Image::getImagine()
-            ->open(self::thumbnailFile($filename, $width, $height, $mode, $quality, $checkRemFileMode));
+            ->open($this->thumbnailFile($filename, $width, $height, $mode, $quality, $checkRemFileMode));
     }
 
     /**
@@ -86,7 +86,7 @@ class EasyThumbnailImage
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
      */
-    public static function thumbnailFile($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $quality = null,
+    public function thumbnailFile($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $quality = null,
                                          $checkRemFileMode = self::CHECK_REM_MODE_NONE)
     {
         $fileContent = null;
@@ -110,14 +110,14 @@ class EasyThumbnailImage
             }
             $thumbnailFileName = md5($filename . $width . $height . $mode . filemtime($filename));
         }
-        $cachePath = Yii::getAlias('@webroot/' . self::$cacheAlias);
+        $cachePath = Yii::getAlias('@webroot/' . $this->cacheAlias);
 
         $thumbnailFileExt = strrchr($filename, '.');
         $thumbnailFilePath = $cachePath . DIRECTORY_SEPARATOR . substr($thumbnailFileName, 0, 2);
         $thumbnailFile = $thumbnailFilePath . DIRECTORY_SEPARATOR . $thumbnailFileName . $thumbnailFileExt;
 
         if (file_exists($thumbnailFile)) {
-            if (self::$cacheExpire !== 0 && (time() - filemtime($thumbnailFile)) > self::$cacheExpire) {
+            if ($this->cacheExpire !== 0 && (time() - filemtime($thumbnailFile)) > $this->$cacheExpire) {
                 unlink($thumbnailFile);
             } else {
                 return $thumbnailFile;
@@ -157,11 +157,11 @@ class EasyThumbnailImage
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
      */
-    public static function thumbnailFileUrl($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $quality = null,
+    public function thumbnailFileUrl($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $quality = null,
                                             $checkRemFileMode = self::CHECK_REM_MODE_NONE)
     {
-        $cacheUrl = Yii::getAlias('@web/' . self::$cacheAlias);
-        $thumbnailFilePath = self::thumbnailFile($filename, $width, $height, $mode, $quality, $checkRemFileMode);
+        $cacheUrl = Yii::getAlias('@web/' . $this->cacheAlias);
+        $thumbnailFilePath = $this->thumbnailFile($filename, $width, $height, $mode, $quality, $checkRemFileMode);
 
         preg_match('#[^\\' . DIRECTORY_SEPARATOR . ']+$#', $thumbnailFilePath, $matches);
         $fileName = $matches[0];
@@ -186,7 +186,7 @@ class EasyThumbnailImage
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
      */
-    public static function thumbnailImg($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $options = [], $quality = null,
+    public function thumbnailImg($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $options = [], $quality = null,
                                         $checkRemFileMode = self::CHECK_REM_MODE_NONE)
     {
         try {
@@ -207,14 +207,14 @@ class EasyThumbnailImage
      * @throws \yii\base\InvalidParamException
      * @return bool
      */
-    public static function clearCache()
+    public function clearCache()
     {
-        $cacheDir = Yii::getAlias('@webroot/' . self::$cacheAlias);
+        $cacheDir = Yii::getAlias('@webroot/' . $this->cacheAlias);
         self::removeDir($cacheDir);
         return @mkdir($cacheDir, self::MKDIR_MODE, true);
     }
 
-    protected static function removeDir($path)
+    protected function removeDir($path)
     {
         if (is_file($path)) {
             @unlink($path);
