@@ -165,7 +165,11 @@ class EasyThumbnailImage extends yii\base\Component
                                             $checkRemFileMode = self::CHECK_REM_MODE_NONE)
     {
         $cacheUrl = Yii::getAlias('@web/' . $this->cacheAlias);
-        $thumbnailFilePath = $this->thumbnailFile($filename, $width, $height, $mode, $quality, $checkRemFileMode);
+        try {
+          $thumbnailFilePath = $this->thumbnailFile($filename, $width, $height, $mode, $quality, $checkRemFileMode);
+        } catch (\Exception $e) {
+            return static::errorHandler($e, $filename);
+        }
 
         preg_match('#[^\\' . DIRECTORY_SEPARATOR . ']+$#', $thumbnailFilePath, $matches);
         $fileName = $matches[0];
@@ -193,11 +197,7 @@ class EasyThumbnailImage extends yii\base\Component
     public function thumbnailImg($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $options = [], $quality = null,
                                         $checkRemFileMode = self::CHECK_REM_MODE_NONE)
     {
-        try {
-            $thumbnailFileUrl = self::thumbnailFileUrl($filename, $width, $height, $mode, $quality, $checkRemFileMode);
-        } catch (\Exception $e) {
-            return static::errorHandler($e, $filename);
-        }
+        $thumbnailFileUrl = $this->thumbnailFileUrl($filename, $width, $height, $mode, $quality, $checkRemFileMode);
 
         return Html::img(
             $thumbnailFileUrl,
