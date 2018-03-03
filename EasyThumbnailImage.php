@@ -93,15 +93,19 @@ class EasyThumbnailImage extends yii\base\Component
         $fileNameIsUrl = false;
         if (preg_match('/^https?:\/\//', $filename)) {
             $fileNameIsUrl = true;
-            if ($checkRemFileMode === self::CHECK_REM_MODE_NONE) {
-                $thumbnailFileName = md5($filename . $width . $height . $mode);
-            } elseif ($checkRemFileMode === self::CHECK_REM_MODE_CRC) {
-                $fileContent = self::fileFromUrlContent($filename);
-                $thumbnailFileName = md5($filename . $width . $height . $mode . crc32($fileContent));
-            } elseif ($checkRemFileMode === self::CHECK_REM_MODE_HEADER) {
-                $thumbnailFileName = md5($filename . $width . $height . $mode . self::fileFromUrlDate($filename));
-            } else {
-                throw new InvalidConfigException();
+            switch ($checkRemFileMode) {
+                case self::CHECK_REM_MODE_NONE:
+                    $thumbnailFileName = md5($filename . $width . $height . $mode);
+                    break;
+                case self::CHECK_REM_MODE_CRC:
+                    $fileContent = self::fileFromUrlContent($filename);
+                    $thumbnailFileName = md5($filename . $width . $height . $mode . crc32($fileContent));
+                    break;
+                case self::CHECK_REM_MODE_HEADER:
+                    $thumbnailFileName = md5($filename . $width . $height . $mode . self::fileFromUrlDate($filename));
+                    break;
+                default:
+                    throw new InvalidConfigException();
             }
         } else {
             $filename = FileHelper::normalizePath(Yii::getAlias($filename));
