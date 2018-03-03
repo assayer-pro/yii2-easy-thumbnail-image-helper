@@ -27,6 +27,7 @@ to the require section of your application's `composer.json` file.
     'thumbnail' => [
         'class' => 'himiklab\thumbnail\EasyThumbnailImage',
         'cacheAlias' => 'assets/gallery_thumbnails',
+        'quality' => 90,
     ],
 ],
 ```

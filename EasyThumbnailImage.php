@@ -24,7 +24,6 @@ class EasyThumbnailImage extends yii\base\Component
 {
     const THUMBNAIL_OUTBOUND = ManipulatorInterface::THUMBNAIL_OUTBOUND;
     const THUMBNAIL_INSET = ManipulatorInterface::THUMBNAIL_INSET;
-    const QUALITY = 50;
     const MKDIR_MODE = 0755;
 
     const CHECK_REM_MODE_NONE = 1;
@@ -37,7 +36,11 @@ class EasyThumbnailImage extends yii\base\Component
     /** @var int $cacheExpire */
     public $cacheExpire = 0;
 
-
+    /**
+     * @var int $quality
+     * @access public
+     */
+    public $quality = 75;
     /**
      * Creates and caches the image thumbnail and returns ImageInterface.
      *
@@ -138,7 +141,7 @@ class EasyThumbnailImage extends yii\base\Component
         }
 
         $options = [
-            'quality' => $quality === null ? self::QUALITY : $quality
+            'quality' => $quality === null ? $this->quality : $quality
         ];
 
         $image = Image::thumbnail($image, $width, $height)->save($thumbnailFile, $options);
