@@ -214,18 +214,8 @@ class EasyThumbnailImage extends yii\base\Component
     public function clearCache()
     {
         $cacheDir = Yii::getAlias('@webroot/' . $this->cacheAlias);
-        self::removeDir($cacheDir);
+        FileHelper::removeDirectory($cacheDir);
         return @mkdir($cacheDir, self::MKDIR_MODE, true);
-    }
-
-    protected function removeDir($path)
-    {
-        if (is_file($path)) {
-            @unlink($path);
-        } else {
-            array_map('self::removeDir', glob($path . DIRECTORY_SEPARATOR . '*'));
-            @rmdir($path);
-        }
     }
 
     /**
