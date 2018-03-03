@@ -124,7 +124,7 @@ class EasyThumbnailImage extends yii\base\Component
         $thumbnailFile = $thumbnailFilePath . DIRECTORY_SEPARATOR . $thumbnailFileName . $thumbnailFileExt;
 
         if (file_exists($thumbnailFile)) {
-            if ($this->cacheExpire !== 0 && (time() - filemtime($thumbnailFile)) > $this->$cacheExpire) {
+            if ($this->cacheExpired($thumbnailFile)) {
                 unlink($thumbnailFile);
             } else {
                 return $thumbnailFile;
@@ -234,6 +234,18 @@ class EasyThumbnailImage extends yii\base\Component
 
         Yii::warning("{$error->getCode()}\n{$error->getMessage()}\n{$error->getFile()}");
         return 'Error ' . $error->getCode();
+    }
+
+    /**
+     * cacheExpired
+     *
+     * @param string $thumbnailFile
+     * @access protected
+     * @return boolean
+     */
+    protected function cacheExpired($thumbnailFile)
+    {
+        return $this->cacheExpire !== 0 && (time() - filemtime($thumbnailFile)) > $this->$cacheExpire;
     }
 
     /**
