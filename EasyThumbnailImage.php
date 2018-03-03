@@ -20,7 +20,7 @@ use yii\httpclient\Client;
  * @author HimikLab
  * @package himiklab\thumbnail
  */
-class EasyThumbnailImage
+class EasyThumbnailImage extends yii\base\Component
 {
     const THUMBNAIL_OUTBOUND = ManipulatorInterface::THUMBNAIL_OUTBOUND;
     const THUMBNAIL_INSET = ManipulatorInterface::THUMBNAIL_INSET;
