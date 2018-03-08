@@ -10,12 +10,12 @@ The preferred way to install this extension is through [composer](http://getcomp
 * Either run
 
 ```
-php composer.phar require "himiklab/yii2-easy-thumbnail-image-helper" "*"
+php composer.phar require "assayer-pro/yii2-easy-thumbnail-image-helper" "*"
 ```
 or add
 
 ```json
-"himiklab/yii2-easy-thumbnail-image-helper" : "*"
+"assayer-pro/yii2-easy-thumbnail-image-helper" : "*"
 ```
 
 to the require section of your application's `composer.json` file.
@@ -25,16 +25,11 @@ to the require section of your application's `composer.json` file.
 ```php
 'components' => [
     'thumbnail' => [
-        'class' => 'himiklab\thumbnail\EasyThumbnail',
+        'class' => 'assayerpro\thumbnail\EasyThumbnailImage',
         'cacheAlias' => 'assets/gallery_thumbnails',
+        'quality' => 90,
     ],
 ],
-```
-
-and in `bootstrap` section, for example:
-
-```php
-'bootstrap' => ['log', 'thumbnail'],
 ```
 
 It is necessary if you want to set global helper's settings for the application.
@@ -44,9 +39,9 @@ Usage
 For example:
 
 ```php
-use himiklab\thumbnail\EasyThumbnailImage;
+use assayerpro\thumbnail\EasyThumbnailImage;
 
-echo EasyThumbnailImage::thumbnailImg(
+echo Yii::$app->thumbnail->thumbnailImg(
     $model->pictureFile,
     50,
     50,
@@ -58,9 +53,9 @@ echo EasyThumbnailImage::thumbnailImg(
 or
 
 ```php
-use himiklab\thumbnail\EasyThumbnailImage;
+use assayerpro\thumbnail\EasyThumbnailImage;
 
-echo EasyThumbnailImage::thumbnailImg(
+echo Yii::$app->thumbnail->thumbnailImg(
     'http://...',
     50,
     50,
@@ -68,22 +63,36 @@ echo EasyThumbnailImage::thumbnailImg(
 );
 ```
 
+If one of thumbnail dimensions is set to null, another one is calculated automatically based on aspect ratio of original image. Note that calculated thumbnail dimension may vary depending on the source image in this case.
+
+```php
+use assayerpro\thumbnail\EasyThumbnailImage;
+
+echo Yii::$app->thumbnail->thumbnailImg(
+    $model->pictureFile,
+    50,
+    null
+);
+```
+
+If both dimensions are specified, resulting thumbnail would be exactly the width and height specified. How it's achieved depends on the mode.
+
 For other functions please see the source code.
 
 If you want to handle errors that appear while converting to thumbnail by yourself, please make your own class and inherit it from EasyThumbnailImage. In your class replace only protected method errorHandler. For example
 
 ```php
-class ThumbHelper extends \himiklab\thumbnail\EasyThumbnailImage
+class ThumbHelper extends \assayerpro\thumbnail\EasyThumbnailImage
 {
 
     protected static function errorHandler($error, $filename)
     {
-        if ($error instanceof \himiklab\thumbnail\FileNotFoundException) {
+        if ($error instanceof \assayerpro\thumbnail\FileNotFoundException) {
             return \yii\helpers\Html::img('@web/images/notfound.png');
         } else {
             $filename = basename($filename);
             return \yii\helpers\Html::a($filename,"@web/files/$filename");
         }
     }
-} 
+}
 ```
