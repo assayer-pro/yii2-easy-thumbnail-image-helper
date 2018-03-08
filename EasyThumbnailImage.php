@@ -66,9 +66,15 @@ class EasyThumbnailImage extends yii\base\Component
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
      */
-    public function thumbnail($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $quality = null,
-                                     $checkRemFileMode = self::CHECK_REM_MODE_NONE)
-    {
+    public function thumbnail(
+        $filename,
+        $width,
+        $height,
+        $mode = self::THUMBNAIL_OUTBOUND,
+        $quality = null,
+        $checkRemFileMode = self::CHECK_REM_MODE_NONE
+    ) {
+
         return Image::getImagine()
             ->open($this->thumbnailFile($filename, $width, $height, $mode, $quality, $checkRemFileMode));
     }
@@ -89,9 +95,15 @@ class EasyThumbnailImage extends yii\base\Component
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
      */
-    public function thumbnailFile($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $quality = null,
-                                         $checkRemFileMode = self::CHECK_REM_MODE_NONE)
-    {
+    public function thumbnailFile(
+        $filename,
+        $width,
+        $height,
+        $mode = self::THUMBNAIL_OUTBOUND,
+        $quality = null,
+        $checkRemFileMode = self::CHECK_REM_MODE_NONE
+    ) {
+
         $fileContent = null;
         $fileNameIsUrl = false;
         if (preg_match('/^https?:\/\//', $filename)) {
@@ -164,12 +176,18 @@ class EasyThumbnailImage extends yii\base\Component
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
      */
-    public function thumbnailFileUrl($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $quality = null,
-                                            $checkRemFileMode = self::CHECK_REM_MODE_NONE)
-    {
+    public function thumbnailFileUrl(
+        $filename,
+        $width,
+        $height,
+        $mode = self::THUMBNAIL_OUTBOUND,
+        $quality = null,
+        $checkRemFileMode = self::CHECK_REM_MODE_NONE
+    ) {
+
         $cacheUrl = Yii::getAlias('@web/' . $this->cacheAlias);
         try {
-          $thumbnailFilePath = $this->thumbnailFile($filename, $width, $height, $mode, $quality, $checkRemFileMode);
+            $thumbnailFilePath = $this->thumbnailFile($filename, $width, $height, $mode, $quality, $checkRemFileMode);
         } catch (\Exception $e) {
             return static::errorHandler($e, $filename);
         }
@@ -197,9 +215,16 @@ class EasyThumbnailImage extends yii\base\Component
      * @throws \yii\base\InvalidParamException
      * @throws \yii\base\InvalidConfigException
      */
-    public function thumbnailImg($filename, $width, $height, $mode = self::THUMBNAIL_OUTBOUND, $options = [], $quality = null,
-                                        $checkRemFileMode = self::CHECK_REM_MODE_NONE)
-    {
+    public function thumbnailImg(
+        $filename,
+        $width,
+        $height,
+        $mode = self::THUMBNAIL_OUTBOUND,
+        $options = [],
+        $quality = null,
+        $checkRemFileMode = self::CHECK_REM_MODE_NONE
+    ) {
+
         $thumbnailFileUrl = $this->thumbnailFileUrl($filename, $width, $height, $mode, $quality, $checkRemFileMode);
 
         return Html::img(
