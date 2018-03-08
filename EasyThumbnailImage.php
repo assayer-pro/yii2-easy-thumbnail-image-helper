@@ -1,11 +1,12 @@
 <?php
 /**
- * @link https://github.com/himiklab/yii2-easy-thumbnail-image-helper
+ * @link https://github.com/assayer-pro/yii2-easy-thumbnail-image-helper
+ * @copyright 2018 Assayer Pro
  * @copyright Copyright (c) 2014-2017 HimikLab
  * @license http://opensource.org/licenses/MIT MIT
  */
 
-namespace himiklab\thumbnail;
+namespace assayerpro\thumbnail;
 
 use Imagine\Image\ManipulatorInterface;
 use Yii;
@@ -17,8 +18,9 @@ use yii\httpclient\Client;
 
 /**
  * Yii2 helper for creating and caching thumbnails on real time
+ * @author Serge Larin <serge.larin@gmail.com>
  * @author HimikLab
- * @package himiklab\thumbnail
+ * @package assayerpro\thumbnail
  */
 class EasyThumbnailImage extends yii\base\Component
 {

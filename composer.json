@@ -1,17 +1,17 @@
 {
-  "name": "himiklab/yii2-easy-thumbnail-image-helper",
+  "name": "assayer-pro/yii2-easy-thumbnail-image-helper",
   "description": "Yii2 helper for creating and caching thumbnails on real time",
   "keywords": ["yii2", "thumbnail", "image", "helper"],
   "type": "yii2-extension",
   "license": "MIT",
   "support": {
-    "source": "https://github.com/himiklab/yii2-easy-thumbnail-image-helper",
-    "issues": "https://github.com/himiklab/yii2-easy-thumbnail-image-helper/issues"
+    "source": "https://github.com/assayer-pro/yii2-easy-thumbnail-image-helper",
+    "issues": "https://github.com/assayer-pro/yii2-easy-thumbnail-image-helper/issues"
   },
   "authors": [
     {
-	  "name": "HimikLab",
-      "homepage": "https://github.com/himiklab/"
+      "name": "Assayer Pro",
+      "homepage": "https://github.com/assayer-pro/"
     }
   ],
   "require": {
@@ -21,7 +21,7 @@
   },
   "autoload": {
     "psr-4": {
-      "himiklab\\thumbnail\\": ""
+      "assayerpro\\thumbnail\\": ""
     }
   }
 }
